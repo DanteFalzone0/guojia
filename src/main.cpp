@@ -16,7 +16,29 @@
 */
 
 #include <iostream>
+#include <string>
+#include <djf-3d-2/djf-3d.h>
+#include "draw_hex.h"
 
 int main(void) noexcept {
-    std::cout << "Hello, world!" << std::endl;
+    std::string title("Guojia - by Dante Falzone");
+    djf_3d::Canvas canvas(
+        title,
+        800,
+        600,
+        0 // no perspective whatsoever
+    );
+    djf_3d::TextRenderer text_rend;
+    canvas.set_draw_color(0, 255, 100, 0);
+    text_rend.render_string(
+        canvas,
+        10,
+        10,
+        "Welcome to the game Guojia, by Dante Falzone!"
+    );
+    gj::draw_hex(20, 20, canvas);
+    canvas.refresh();
+    while (!canvas.exit());
+
+    return 0;
 }

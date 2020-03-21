@@ -1,0 +1,5 @@
+TODO:
+> create a hex class (simply drawing hexagons is probably
+  not going to cut it)
+
+> uhhh...
