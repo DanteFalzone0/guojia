@@ -17,27 +17,40 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <djf-3d-2/djf-3d.h>
 #include "draw_hex.h"
+#include "HexTypes.h"
+#include "HexTile.h"
 
 int main(void) noexcept {
     std::string title("Guojia - by Dante Falzone");
-    djf_3d::Canvas canvas(
-        title,
-        800,
-        600,
-        0 // no perspective whatsoever
-    );
+
+    djf_3d::Canvas canvas(title, 800, 600, 0);
+
     djf_3d::TextRenderer text_rend;
+
     canvas.set_draw_color(0, 255, 100, 0);
-    text_rend.render_string(
-        canvas,
-        10,
-        10,
+
+    text_rend.render_string(canvas, 10, 10,
         "Welcome to the game Guojia, by Dante Falzone!"
     );
-    gj::draw_hex(20, 20, canvas);
+
+    std::vector<gj::HexTile> hex_tiles;
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 30; x++) {
+            hex_tiles.push_back(
+                gj::HexTile(x, y, gj::HexType::PLAINS)
+            );
+        }
+    }
+
+    for (auto& hex_tile : hex_tiles) {
+        hex_tile.show_self(canvas);
+    }
+
     canvas.refresh();
+
     while (!canvas.exit());
 
     return 0;
